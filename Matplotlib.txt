@@ -1,0 +1,274 @@
+Verilen veriler ile güzel gözüken grafikler yapmaya yarıyor.
+
+pip install matplotlib —> İndirmek için
+
+from matplotlib import pyplot as plt —> Pyplot’u plt olarak import ediyoruz
+
+plt.plot(x_ekseni , y_ekseni) —> İki eksenli plot oluşturmak için
+
+plt.show() —> Plotu görmek için show komutunu kullanıyoruz
+
+X ve Y ekseni için listeler oluşturup bu listelerin grafiksel olarak çıktılarını görüyoruz.
+
+plt.title() —> Grafiğe başlık eklemek için
+
+plt.xlabel() —> X eksenine isim vermek için
+
+plt.ylabel() —> Y eksenine isim vermek için
+
+plt.legend() —> Grafiğe açıklama eklemek için
+
+plt.plot(x_data, y_data1)
+
+plt.plot(x_data, y_data2) —> Aynı grafik üzerinde iki farklı grafiği de gösterecek, x eksenleri ortak, y ler ise değişken
+
+plt.legend([’y_data1 açıklama’, ‘y_data2 açıklama’]) —> Grafikte iki farklı çizginin ne anlam ifade ettiğini açıklamak için
+
+plt.plot(x_data, y_data2, label=’Açıklama’) —> Yukarıdaki ile aynı işlevi görüyor bu sefer açıklamayı direk kodun içinde yazmış oluyoruz
+
+— Format Strings —
+
+fmt = ‘[marker][line][color]’
+
+‘-’ —> Solid line style (tek parça)
+
+‘—’ —> Dashed line style (kesikli)
+
+‘b’ (blue) ‘g’ (green) ‘r’ (red) ‘c’ (cyan) ‘m’ (magenta) ‘y’ (yellow) ‘k’ (black) ‘w’ (white)
+
+plt.plot(x_data, y_data2, ‘—k’, label=’Açıklama’) —> İstediğimiz çizgi tipini ve rengini yazıyoruz
+
+plt.plot(x_data, y_data2, color=’k’, linestyle=’—’, label=’Açıklama’) —> Kodumuzun daha okunaklı olması için böyle de yazabiliriz
+
+Marker da eklemek için = plt.plot(x_data, y_data2, color=’k’, marker= ‘o’, linestyle=’—’, label=’Açıklama’)
+
+Farklı renkler için hex kodlarını bulup color karşısına yazabiliriz.
+
+color = ‘#111111’ —> İlk 2 değer red orta 2 green son 2 değer blue belirtir.
+
+linewidth —> Çizgi kalınlığını ayarlamak için
+
+ plt.plot(x_data, y_data2, color=’k’, linewidth=3, linestyle=’—’, label=’Açıklama’) 
+
+plt.tight_layout() —> İki grafik arasındaki boşluğu ayarlar birbirine girmesini önler
+
+plt.grid(True) —> Grafiğe ızgara eklemek için
+
+print(plt.style.available) —> Mevcut olan kullanılabilir stilleri gösteriyor
+
+plt.style.use(’stil_adi’) —> Stil değiştirmek için
+
+plt.xkcd() —> Grafiği çizgi roman gibi gösteriyor
+
+plt.savefig(’kaydetmek_istediğimiz_ad.png’) —> Grafiği kaydetmek istediğimizde (dizin içine kaydediliyor)
+
+plt.bar(x_data, y_data2, color=’k’, linestyle=’—’, label=’Açıklama’) —> Bar metoduna geçtiğimizde grafiğimiz barlar şeklinde oluyor
+
+Farklı grafiklerin hepsini bar metoduna dönüştürdüğümüzde iç içe geçme sorunu yaşayabiliyoruz. Bunu düzeltmek için numpy fonksiyonundan yardım alacağız. 
+
+x_endeksi = np.arange(len(x_çizgisi)) —> 0 dan başlayarak x_çizgisi uzunluğu kadar sırayla artan bir dizi döndürür.
+
+width = 0.25 —> Aralarındaki genişliği ayarlıyoruz
+
+plt.bar(x_data - width, y_data2, color=’k’, width = width, linestyle=’—’, label=’Açıklama’) —> Width ile grafik boyutunu belirliyoruz (son bara da + width ekliyoruz)
+
+plt.xticks(ticks=x_indeks, x_cizgisi) —> Grafikte bütün x değerlerini görmek için
+
+import csv —> Csv Modulünü import etmek için
+
+with open(’data.csv’) as csv_file: —> csv dosyamızı csv_file adıyla açtık
+
+Csv Python'daki csv modülünde yer alan bir sınıftır ve CSV (Comma Separated Values - Virgülle Ayrılmış Değerler) dosyalarını okuma işlemi için kullanılır. Dictreader, her bir satırı bir Python sözlüğü (dictionary) olarak okur. Bu, CSV dosyasındaki her sütunun adını anahtar olarak kullanıp, her bir satırı bu anahtarlar altında bir değerle eşler.
+
+csv_reader = csv.DictReader(csv_file)
+
+row = next(csv_reader) —> Listedeki ilk ögeyi almayı sağlıyor
+
+print(row[’LanguagesWorkedWith’].split(;)) —> Burada LanguagesWorkedWith anahtar split komutu ile de o işaretten verileri ayırıyoruz
+
+from collections import Counter —> Sayıcıyı import ediyoruz
+
+language_counter = Counter()
+
+for row in csv.readers:
+
+language_counter.update(row['LanguagesWorkedWith'].split(';'))
+
+Bu kod her satırdaki programlama dillerini sayar ve toplam kullanım sayılarını tutar
+
+language_counter.most_common(15) komutu ile en çok kullanılan 15 dili görebiliriz.
+
+languages_counter.items() ile dil ve kullanım sayısını ayrı listelere alabiliriz.
+
+languages = []
+
+popularity = []
+
+for item in language_counter.items():
+
+languages.append(item[0]) —> Dilleri veriyor
+
+popularity.append(item[1]) —> Kullanıcı sayılarını veriyor
+
+plt.barh(languages, popularity) —> Oluşturduğumuz listeleri grafiğe aktarıyoruz (Grafiği sola dayalı hale getiriyoruz)
+
+— Pie Charts —
+
+slice=[60, 40]
+
+plt.pie(slices) —> Verdiğimiz değerler dilimler halinde çiziliyor
+
+labels = ['Grup A', 'Grup B']
+
+plt.pie(slices, labels=labels) -> Dilimlere etiket eklemek için
+
+colors = ['blue', 'red'] —> Renk eklemek için
+
+plt.pie(slices, labels=labels, colors=colors) -> Dilimlere renk vermek için
+
+plt.pie(slices, labels=labels, colors=colors, wedgeprops={'edgecolor': 'black'}) -> Dilimlerin etrafına siyah çerçeve eklemek için
+
+Büyük datalarda pie Charts güzel gözükmüyor
+
+explode=[0, 0, 0, 0.1, 0] —> Hangi dilimi daha öne çıkarmak istiyorsak onun değerini büyütüyoruz
+
+plt.pie(slices, labels=labels, colors=colors, wedgeprops={'edgecolor': 'black'}, explode=explode) -> Dilimlerden birini öne çıkarmak için explode kullanıyoruz. Listede hangi değer 0'dan büyükse o dilim o kadar öne çıkıyor.
+
+shadow=True —> Dilimlerin gölgesini eklemek için (plt.pie içerisine koyuyoruz)
+
+startangle = 90 (Başlangıç açısını 90 derece döndürüyor, plt.pie içerisine yazılır)
+
+autopct='%1.1f%%' —> Dilimlerin yüzdelik değerlerini göstermek için (auto percent )
+
+plt.pie(slices, labels=labels, colors=colors, wedgeprops={'edgecolor': 'black'}, explode=explode, shadow=True, autopct='%1.1f%%') —> Tüm özellikleri bir arada kullanabiliriz
+
+— Stack Plots —
+
+plt.stackplot(minutes, player1, player2, player3) —> Verilmiş verileri üst üste gösterir 
+
+plt.legend(loc=’upper left’) —> Açıklama kısmını sola taşımak için
+
+— Filling Area on Line Plots —
+
+import pandas as pd —> Pandası import ediyoruz (pandas, veri işlemesi ve analizi için Python yazılmış olan bir yazılım kütüphanesidir.)
+
+data = pd.read_csv(’data.csv’) —> data.csv dosyasını pandas komutu sayesinde okuyoruz
+
+ages = data[’Age’] —> Age sütununu ages değişkenine aktarıyoruz (data dosyası içinde Age bölümü var)
+
+dev_saleries = data[’All_Devs’]
+
+py_saleries = data[’Python’]
+
+js_saleries = data[’JavaScript’]
+
+plt.plot(ages, dev_saleries, color=’#444444’, linestyle=’—’, label=’All Devs’ ) —> Dev Saleries grafik gösterimi için istediğimiz özellikleri girdik
+plt.fill_between(ages, py_saleries, alpha=0.25) —> Arasını doldur özelliği kullanarak py saleries değerlerine kadar olan boşlukları dolduruyoruz. 0.25 değeri ise daha okunaklı bir görünüm olsun diye.
+
+overall_median = 57145 —> Genel medyan adında bir sayı tanımladık
+
+plt.fill_between(ages, py_saleries, overall_median, alpha=0.25) —> Medyan değeri arasında kalan boşlukları dolduruyor
+
+plt.fill_between(ages, py_saleries, overall_median, where=(py_saleries > overall_median), interpolate=True, alpha=0.25) —> Sadece medyan üstünde kalan yerleri grafikte gösteriyor
+
+plt.fill_between(ages, py_saleries, overall_median, where=(py_saleries ≤ overall_median), interpolate=True, alpha=0.25) —> Medyan altında kalan alanları kırmızı bir şekilde gösterir (color değişkeni ile istediğimiz rengi ekleyebiliriz)
+
+Bunu iki farklı liste için karşılaştırıp aralarındaki farkı renkli olarak görmek için de yapabiliriz.
+
+— Histograms —
+
+plt.hist(ages, bins=5, edgecolor=’black’) —> 5 eşit kutucuklara böl ve aralarına siyah çizgi yerleştir
+
+bins=[10,20,30,40,50] —> Kendi aralıklarımızı da belirtebiliriz 
+
+log=True (logaritmik olarak göstermek için)
+
+median age=29
+
+plt.axvline(median_age, color=’red’, label=’Age Median’) —> Medyan çizgisi eklemek istediğimizde axvline (axis vertical line) kullanıyoruz
+
+— Scatter Plots —
+
+Serpilme diyagramı, iki farklı değişkenin arasındaki ilişkiyi belirlemek için kullanılır. Aralarındaki ilişkinin sebebi görülemese de, ilgili iki değişkenin arasında direkt olarak bir ilişki bulunup bulunmadığı ve bu ilişkinin ne derece güçlü olduğu görülebilir.Aralarında ilişki bulunan iki değişkenin değerleri diyagramda bir çizgi boyunca uzanacaktır. Karşılık gelen değerler bu çizgiye yaklaştıkça aralarındaki ilişkinin güçlendiği anlaşılır.
+
+plt.scatter(x, y, s=100, c=’green’, edgecolor=’black’, linewidth=1, alpha=0.75) —> X ve Y değişkeni arasındaki grafiği oluşturmak için kullanıyoruz. Dairenin kenarlarını siyah yapmak için edgecolor kullandık. (s=sizes, c=color)
+
+cbar = plt.colorbar()
+
+cbar.set_label(’Satisfaction’) —> Grafiğin sağ tarafında bir bar oluşturuyor yoğunluk durumu hakkında bilgi veren
+
+plt.xscale(’log’)
+
+plt.yscale(’log’) —> Logaritmik ölçeklendiriyor
+
+cmap —> Hangi renk skalasında olmasını istiyorsak onu yazıyoruz
+
+— Plotting Time Series Data —
+
+Zaman içindeki eğilimleri, kalıpları ve davranışları analiz etmek için kullanılabilir.
+
+from datetime import datetime, timedelta
+
+from matplotlib import dates as mpl_dates
+
+plt.plot_date(dates, y, linestyle=’solid’) —> Çizgi grafiği oluşturmak için
+
+plc.gcf().autofmt_xdate() —> Tarih daha okunabilir bir hal alıyor
+
+date_format = mpl_dates.DateFormatter(’%b, %d %Y’)
+
+plt.gca().xaxis.set_major_formatter(date_format) —> Sayı olan ayları isimlere çeviriyor
+
+— Plotting Live Data in Real Time —
+
+Verilerin sürekli olarak güncellenmesi ve bu verilerin grafiksel olarak, anlık bir şekilde görselleştirilmesi işlemidir.
+
+from matplotlib.animation import FuncAnimation (FuncAnimation Python'da matplotlib kütüphanesinin bir parçası olan, animasyon oluşturmak için kullanılan bir fonksiyondur. Bu fonksiyon, genellikle dinamik grafikler veya zamanla değişen verileri görselleştirmek için kullanılır.)
+
+import random
+
+from itertools import count
+
+import matplotlib.pyplot as plt
+
+x_vals = []
+
+y_vals = []
+
+index = count()
+
+def animate(i):
+
+ x_vals.append(next(index))
+
+ y_vals.append(random.randint(0, 5)) —> Bu fonksiyon, a ile b arasındaki her iki sayıyı da dahil ederek rastgele bir tam sayı döndüren bir fonksiyondur.
+
+ani = FuncAnimation(plt.gcf(), animate, interval=1000) —> **"gcf"**, **"get current figure"** anlamına gelir. Bu fonksiyon, aktif bir figürün (grafik penceresi) üzerinde işlem yapmanızı sağlar. İnterval komutu ile yeni gelecek verilerin gelme süresini yazıyoruz.
+
+plt.cla() —> Aynı figür üzerinde yeni grafikler çizerken, önceki grafiklerin temizlenmesini sağlar. (Verilerin tek bir renkte olmasını sağlıyor)
+
+plt.tight_layout() —> Matplotlib kütüphanesinde kullanılan bir fonksiyondur ve grafiklerin düzgün bir şekilde yerleştirilmesini sağlar. Özellikle birden fazla subplot (alt grafik) içeren bir figürde, bu fonksiyon, grafiklerin birbirine çarpmasını veya eksik görünmesini engeller.
+
+— Subplots —
+
+plt.gca —> "get current axis" anlamına gelir ve şu anda aktif olan (yani üzerinde işlem yapılan) ekseni (axis) döndüren bir fonksiyondur. Bu fonksiyon, bir grafik üzerinde işlem yaparken, varsayılan ekseni elde etmenizi sağlar, böylece eksen üzerinde manipülasyonlar yapabilirsiniz.
+
+plt.subplots() fonksiyonu, Matplotlib kütüphanesinde, bir veya birden fazla alt grafik (subplot) oluşturmak için kullanılır.
+
+ax —>  **"**axis**"** (ekseni) temsil etmek için kullanılan yaygın bir kısaltmadır. Bu terim, özellikle bir veya birden fazla grafik çizildiğinde kullanılan eksen objesini ifade eder.
+
+fig —> bir grafik çizim alanını temsil eden bir nesnedir. Grafiklerin tümünün yer aldığı, eksenler, etiketler, başlıklar ve diğer görsel öğelerin bulunduğu ana "şekil" veya "çerçeve" olarak düşünülebilir. 
+
+fig, ax = plt.subplots()
+
+plt komutunu uyguladığımız yerlere ax ifadesini uyguluyoruz (ax.plot(ages, py_saleries, label=’Python’))
+
+fig, (ax1, ax2) = plt.subplots(nrows=2, ncols=1)
+
+ax1.plot(ages, py_saleries, label=’Python’) —> 2 tane grafik gösterimi için plt komutlatı yerine 1. grafik için ax1 ifadesini 2. grafik için ise ax2 ifadesini yazıyoruz
+
+sharex=True ifadesi ile iki grafik için tek bir x ekseni değerleri kullanabiliyoruz
+
+fig ifadelerini fig1 ve fig2 diye ayırırsak iki ayrı pencerede grafiklerimizi elde ederiz.
+
+fig1.savefig(’fig1.png’) —> Figure 1’i kaydetmek için
